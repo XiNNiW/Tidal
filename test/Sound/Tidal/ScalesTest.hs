@@ -9,6 +9,7 @@ import Prelude hiding ((<*), (*>))
 
 import Sound.Tidal.Scales
 import Sound.Tidal.Pattern
+import Sound.Tidal.ParseBP
 
 run :: Microspec ()
 run =
@@ -314,5 +315,22 @@ run =
             it "correctly maps negative numbers" $ do
                 compareP (Arc 0 1)
                     (Sound.Tidal.Scales.scale "major" "0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 -13")
-                    ("0 -1 -3 -5 -7 -8 -10 -12 -13 -15 -17 -19 -20 -22 "::Pattern Int)
+                    ("0 -1 -3 -5 -7 -8 -10 -12 -13 -15 -17 -19 -20 -22 ":: Pattern Int)
+    describe "constrainToPitchClass" $ do 
+        describe "scales" $ do
+            let testIndices = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+            
+            fmap (\scaleNameRow -> 
+                let scaleName = (parseBP_E $ fst scaleNameRow) in
+                    it "does what scale does" $ do
+                        compareP (Arc 0 1)
+                            (constrainToPitchClass scaleName testIndices)
+                            (Sound.Tidal.Scales.scale scaleName testIndices:: Pattern Int)
+                ) Sound.Tidal.Scales.scaleTable
+                
+                    
+
+
+
+
            

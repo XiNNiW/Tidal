@@ -1,4 +1,4 @@
-module Sound.Tidal.Scales (scale, scaleList) where
+module Sound.Tidal.Scales (scale, scaleList, constrainToPitchClass,scaleTable) where
 
 import Data.Maybe
 import Data.List (intercalate)
@@ -174,6 +174,11 @@ scale :: Num a => Pattern String -> Pattern Int -> Pattern a
 scale sp p = (\n scaleName -> noteInScale (fromMaybe [0] $ lookup scaleName scaleTable) n) <$> p <*> sp
   where octave s x = x `div` length s
         noteInScale s x = (s !!! x) + (fromIntegral $ 12 * octave s x)
+
+constrainToPitchClass :: Num a => Pattern String -> Pattern Int -> Pattern a
+constrainToPitchClass sp p = (\n scaleName -> noteInScale (fromMaybe [0] $ lookup scaleName scaleTable) n) <$> p <*> sp
+  where octave s x = x `div` length s
+        noteInScale s x = (s !!! x) + (fromIntegral $ 5 * octave s x)
 
 scaleList :: String
 scaleList = intercalate " " $ map fst (scaleTable :: [(String, [Int])])
