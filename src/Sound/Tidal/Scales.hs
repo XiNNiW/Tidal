@@ -1,10 +1,11 @@
-module Sound.Tidal.Scales (scale, scaleList, constrainToPitchClass,scaleTable) where
+module Sound.Tidal.Scales (scale, scaleList, scaleTable) where
 
 import Data.Maybe
-import Data.List (intercalate)
+import Data.List (intercalate, nub, sort)
 
 import Sound.Tidal.Pattern
 import Sound.Tidal.Utils
+import Sound.Tidal.Chords (chordTable)
 
 -- five notes scales
 minPent :: Num a => [a]
@@ -170,15 +171,13 @@ messiaen7 = [0, 1, 2, 3, 5, 6, 7, 8, 9, 11]
 chromatic :: Num a => [a]
 chromatic = [0,1,2,3,4,5,6,7,8,9,10,11]
 
-scale :: Num a => Pattern String -> Pattern Int -> Pattern a
-scale sp p = (\n scaleName -> noteInScale (fromMaybe [0] $ lookup scaleName scaleTable) n) <$> p <*> sp
+scale :: (Num a, Eq a, Ord a, Integral a) => Pattern String -> Pattern Int -> Pattern a
+scale sp p = (\n scaleName -> noteInScale (fromMaybe (compressChordToOneOctave $ fromMaybe [0] $ lookup scaleName chordTable) $ lookup scaleName scaleTable) n) <$> p <*> sp
   where octave s x = x `div` length s
         noteInScale s x = (s !!! x) + (fromIntegral $ 12 * octave s x)
 
-constrainToPitchClass :: Num a => Pattern String -> Pattern Int -> Pattern a
-constrainToPitchClass sp p = (\n scaleName -> noteInScale (fromMaybe [0] $ lookup scaleName scaleTable) n) <$> p <*> sp
-  where octave s x = x `div` length s
-        noteInScale s x = (s !!! x) + (fromIntegral $ 5 * octave s x)
+compressChordToOneOctave :: (Num a, Eq a, Ord a, Integral a) => [a] -> [a]
+compressChordToOneOctave chord = (sort $ nub $ map ((flip mod) 12) chord)
 
 scaleList :: String
 scaleList = intercalate " " $ map fst (scaleTable :: [(String, [Int])])

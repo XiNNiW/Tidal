@@ -316,19 +316,214 @@ run =
                 compareP (Arc 0 1)
                     (Sound.Tidal.Scales.scale "major" "0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11 -12 -13")
                     ("0 -1 -3 -5 -7 -8 -10 -12 -13 -15 -17 -19 -20 -22 ":: Pattern Int)
-    describe "constrainToPitchClass" $ do 
-        describe "scales" $ do
-            let testIndices = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14"
+        describe "chord names" $ do
+            let twoOctavesOfTwoNoteChord = "0 1 2 3"
+            let twoOctavesOfThreeNoteChord = "0 1 2 3 4 5"
+            let twoOctavesOfFourNoteChord = "0 1 2 3 4 5 6 7"
+            let twoOctavesOfFiveNoteChord = "0 1 2 3 4 5 6 7 8 9"
+            let twoOctavesOfSixNoteChord = "0 1 2 3 4 5 6 7 8 9 10 11"
+            let twoOctavesOfSevenNoteChord = "0 1 2 3 4 5 6 7 8 9 10 11 12 13"
+            it "can use maj" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "maj" twoOctavesOfThreeNoteChord)
+                    ("0 4 7 12 16 19"::Pattern Int)
+            it "can use min" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "min" twoOctavesOfThreeNoteChord)
+                    ("0 3 7 12 15 19"::Pattern Int)
+            it "can use maj7" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "maj7" twoOctavesOfFourNoteChord)
+                    ("0 4 7 11 12 16 19 23"::Pattern Int)
+            it "can use major7" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "major7" twoOctavesOfFourNoteChord)
+                    (Sound.Tidal.Scales.scale "maj7" twoOctavesOfFourNoteChord::Pattern Int)
+            it "can use min7" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "min7" twoOctavesOfFourNoteChord)
+                    ("0 3 7 10 12 15 19 22"::Pattern Int)
+            it "can use minor7" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "minor7" twoOctavesOfFourNoteChord)
+                    (Sound.Tidal.Scales.scale "min7" twoOctavesOfFourNoteChord::Pattern Int)
+            it "can use dom7" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "dom7" twoOctavesOfFourNoteChord)
+                    ("0 4 7 10 12 16 19 22"::Pattern Int)
+            it "can use aug" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "aug" twoOctavesOfThreeNoteChord)
+                    ("0 4 8 12 16 20"::Pattern Int)
+            it "can use dim" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "dim" twoOctavesOfThreeNoteChord)
+                    ("0 3 6 12 15 18"::Pattern Int)
+            it "can use dim7" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "dim7" twoOctavesOfFourNoteChord)
+                    ("0 3 6 9 12 15 18 21"::Pattern Int)
+            it "can use one" $ do 
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "one" "0 1 2")
+                    ("0 12 24"::Pattern Int)
+            it "can use 1" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "1" "0 1 2")
+                    (Sound.Tidal.Scales.scale "one" "0 1 2"::Pattern Int)
+            it "can use five" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "five" twoOctavesOfTwoNoteChord)
+                    ("0 7 12 19"::Pattern Int)
+            it "can use plus" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "plus" twoOctavesOfThreeNoteChord)
+                    (Sound.Tidal.Scales.scale "aug" twoOctavesOfThreeNoteChord::Pattern Int)
+            it "can use sharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sharp5" twoOctavesOfThreeNoteChord)
+                    (Sound.Tidal.Scales.scale "aug" twoOctavesOfThreeNoteChord::Pattern Int)
+            it "can use msharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "msharp5" twoOctavesOfThreeNoteChord)
+                    ("0 3 8 12 15 20"::Pattern Int)
+            it "can use sus2" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sus2" twoOctavesOfThreeNoteChord)
+                    ("0 2 7 12 14 19"::Pattern Int)
+            it "can use sus4" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sus4" twoOctavesOfThreeNoteChord)
+                    ("0 5 7 12 17 19"::Pattern Int)
+            it "can use six" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "six" twoOctavesOfFourNoteChord)
+                    ("0 4 7 9 12 16 19 21"::Pattern Int)
+            it "can use m6" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m6" twoOctavesOfFourNoteChord)
+                    ("0 3 7 9 12 15 19 21"::Pattern Int)
+            it "can use sevenSus2" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenSus2" twoOctavesOfFourNoteChord)
+                    ("0 2 7 10 12 14 19 22"::Pattern Int)
+            it "can use sevenSus4" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenSus4" twoOctavesOfFourNoteChord)
+                    ("0 5 7 10 12 17 19 22"::Pattern Int)
+            it "can use sevenSus4" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenSus4" twoOctavesOfFourNoteChord)
+                    ("0 5 7 10 12 17 19 22"::Pattern Int)
+            it "can use sevenFlat5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenFlat5" twoOctavesOfFourNoteChord)
+                    ("0 4 6 10 12 16 18 22"::Pattern Int)
+            it "can use m7flat5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m7flat5" twoOctavesOfFourNoteChord)
+                    ("0 3 6 10 12 15 18 22"::Pattern Int)
+            it "can use sevenSharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenSharp5" twoOctavesOfFourNoteChord)
+                    ("0 4 8 10 12 16 20 22"::Pattern Int)
+            it "can use m7sharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m7sharp5" twoOctavesOfFourNoteChord)
+                    ("0 3 8 10 12 15 20 22"::Pattern Int)
+            it "can use nine" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "nine" twoOctavesOfFiveNoteChord)
+                    ("0 2 4 7 10 12 14 16 19 22"::Pattern Int)
+            it "can use m9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m9" twoOctavesOfFiveNoteChord)
+                    ("0 2 3 7 10 12 14 15 19 22"::Pattern Int)
+            it "can use m7sharp9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m7sharp9" twoOctavesOfFiveNoteChord)
+                    (Sound.Tidal.Scales.scale "m9" twoOctavesOfFiveNoteChord::Pattern Int)
+            it "can use maj9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "maj9" twoOctavesOfFiveNoteChord)
+                    ("0 2 4 7 11 12 14 16 19 23"::Pattern Int)
+            it "can use nineSus4" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "nineSus4" twoOctavesOfFiveNoteChord)
+                    ("0 2 5 7 10 12 14 17 19 22"::Pattern Int)
+            it "can use sixby9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sixby9" twoOctavesOfFiveNoteChord)
+                    ("0 2 4 7 9 12 14 16 19 21"::Pattern Int)
+            it "can use m6by9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m6by9" twoOctavesOfFiveNoteChord)
+                    ("0 2 3 7 9 12 14 15 19 21"::Pattern Int)
+            it "can use sevenFlat9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenFlat9" twoOctavesOfFiveNoteChord)
+                    ("0 1 4 7 10 12 13 16 19 22"::Pattern Int)
+            it "can use m7flat9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m7flat9" twoOctavesOfFiveNoteChord)
+                    ("0 1 3 7 10 12 13 15 19 22"::Pattern Int)
+            it "can use sevenFlat10" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenFlat10" twoOctavesOfFiveNoteChord)
+                    ("0 3 4 7 10 12 15 16 19 22"::Pattern Int)
+            it "can use nineSharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "nineSharp5" twoOctavesOfTwoNoteChord)
+                    ("0 1 12 13"::Pattern Int)
+            it "can use m9sharp5" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m9sharp5" twoOctavesOfThreeNoteChord)
+                    ("0 1 2 12 13 14"::Pattern Int)
+            it "can use sevenSharp5flat9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sevenSharp5flat9" twoOctavesOfFiveNoteChord)
+                    ("0 1 4 8 10 12 13 16 20 22"::Pattern Int)
+            it "can use m7sharp5flat9" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m7sharp5flat9" twoOctavesOfFiveNoteChord)
+                    ("0 1 3 8 10 12 13 15 20 22"::Pattern Int)
+            it "can use eleven" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "eleven" twoOctavesOfSixNoteChord)
+                    ("0 2 4 5 7 10 12 14 16 17 19 22"::Pattern Int)
+            it "can use 11" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "eleven" twoOctavesOfSixNoteChord)
+                    (Sound.Tidal.Scales.scale "11" twoOctavesOfSixNoteChord::Pattern Int)
+            it "can use m11" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m11" twoOctavesOfSixNoteChord)
+                    ("0 2 3 5 7 10 12 14 15 17 19 22"::Pattern Int)
+            it "can use maj11" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "maj11" twoOctavesOfSixNoteChord)
+                    ("0 2 4 5 7 11 12 14 16 17 19 23"::Pattern Int)
+            it "can use elevenSharp" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "elevenSharp" twoOctavesOfSixNoteChord)
+                    ("0 2 4 6 7 10 12 14 16 18 19 22"::Pattern Int)
+            it "can use sharp11" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "sharp11" twoOctavesOfSixNoteChord)
+                    (Sound.Tidal.Scales.scale "elevenSharp" twoOctavesOfSixNoteChord::Pattern Int)
+            it "can use m11sharp" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m11sharp" twoOctavesOfSixNoteChord)
+                    ("0 2 3 6 7 10 12 14 15 18 19 22"::Pattern Int)
+            it "can use thirteen" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "thirteen" twoOctavesOfSevenNoteChord)
+                    ("0 2 4 5 7 9 10 12 14 16 17 19 21 22"::Pattern Int)
+            it "can use m13" $ do
+                compareP (Arc 0 1)
+                    (Sound.Tidal.Scales.scale "m13" twoOctavesOfSevenNoteChord)
+                    ("0 2 3 5 7 9 10 12 14 15 17 19 21 22"::Pattern Int)    
             
-            fmap (\scaleNameRow -> 
-                let scaleName = (parseBP_E $ fst scaleNameRow) in
-                    it "does what scale does" $ do
-                        compareP (Arc 0 1)
-                            (constrainToPitchClass scaleName testIndices)
-                            (Sound.Tidal.Scales.scale scaleName testIndices:: Pattern Int)
-                ) Sound.Tidal.Scales.scaleTable
-                
-                    
 
 
 
